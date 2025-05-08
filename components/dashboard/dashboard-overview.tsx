@@ -1,38 +1,67 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
 const data = [
-  { name: "Mon", posts: 4, engagement: 240 },
-  { name: "Tue", posts: 3, engagement: 139 },
-  { name: "Wed", posts: 5, engagement: 350 },
-  { name: "Thu", posts: 2, engagement: 190 },
-  { name: "Fri", posts: 6, engagement: 390 },
-  { name: "Sat", posts: 4, engagement: 310 },
-  { name: "Sun", posts: 3, engagement: 200 },
+  { name: "Mon", followers: 400, engagement: 240, reach: 1240 },
+  { name: "Tue", followers: 430, engagement: 139, reach: 1800 },
+  { name: "Wed", followers: 448, engagement: 380, reach: 2400 },
+  { name: "Thu", followers: 470, engagement: 390, reach: 2200 },
+  { name: "Fri", followers: 540, engagement: 480, reach: 2800 },
+  { name: "Sat", followers: 580, engagement: 390, reach: 3200 },
+  { name: "Sun", followers: 610, engagement: 490, reach: 3180 },
 ]
 
 export function DashboardOverview() {
   return (
-    <Card className="col-span-2">
+    <Card className="col-span-1 md:col-span-2">
       <CardHeader>
-        <CardTitle>Weekly Overview</CardTitle>
+        <CardTitle>Performance Overview</CardTitle>
+        <CardDescription>Track your social media growth and engagement across platforms</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-              <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-              <Tooltip />
-              <Bar yAxisId="left" dataKey="posts" fill="#8884d8" name="Posts" />
-              <Bar yAxisId="right" dataKey="engagement" fill="#82ca9d" name="Engagement" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        <Tabs defaultValue="growth">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="growth">Growth</TabsTrigger>
+            <TabsTrigger value="engagement">Engagement</TabsTrigger>
+            <TabsTrigger value="reach">Reach</TabsTrigger>
+          </TabsList>
+          <TabsContent value="growth" className="h-[300px] mt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="followers" stroke="#8884d8" strokeWidth={2} activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </TabsContent>
+          <TabsContent value="engagement" className="h-[300px] mt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="engagement" stroke="#82ca9d" strokeWidth={2} activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </TabsContent>
+          <TabsContent value="reach" className="h-[300px] mt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="reach" stroke="#ffc658" strokeWidth={2} activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   )
