@@ -13,6 +13,7 @@ interface FileUploadProps {
   maxSize?: number // in MB
   className?: string
   buttonText?: string
+  customButton?: React.ReactNode
 }
 
 export function FileUpload({
@@ -21,6 +22,7 @@ export function FileUpload({
   maxSize = 5, // 5MB default
   className = "",
   buttonText = "Upload File",
+  customButton,
 }: FileUploadProps) {
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -67,6 +69,23 @@ export function FileUpload({
     if (fileInputRef.current) {
       fileInputRef.current.click()
     }
+  }
+
+  // If a custom button is provided, use it
+  if (customButton) {
+    return (
+      <div className={className}>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileSelect}
+          accept={accept}
+          className="hidden"
+          aria-label="Upload file"
+        />
+        <div onClick={promptForPermission}>{customButton}</div>
+      </div>
+    )
   }
 
   return (

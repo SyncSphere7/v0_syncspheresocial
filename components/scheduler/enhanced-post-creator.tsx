@@ -239,17 +239,25 @@ export function EnhancedPostCreator() {
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
-              <FileUpload onFileSelect={handleAddMedia} accept="image/*,video/*" buttonText="" className="w-auto">
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <ImageIcon className="h-4 w-4" />
-                  Add Media
-                </Button>
-              </FileUpload>
+            <div className="flex items-center gap-2 overflow-x-auto pb-2">
+              <div className="shrink-0">
+                <FileUpload
+                  onFileSelect={handleAddMedia}
+                  accept="image/*,video/*"
+                  buttonText=""
+                  customButton={
+                    <Button variant="outline" size="sm" className="h-9 whitespace-nowrap">
+                      <ImageIcon className="h-4 w-4 mr-2" />
+                      Add Media
+                    </Button>
+                  }
+                />
+              </div>
 
               <Button
                 variant="outline"
                 size="sm"
+                className="shrink-0 whitespace-nowrap h-9"
                 onClick={() => {
                   toast({
                     title: "Feature coming soon",
@@ -264,6 +272,7 @@ export function EnhancedPostCreator() {
               <Button
                 variant="outline"
                 size="sm"
+                className="shrink-0 whitespace-nowrap h-9"
                 onClick={() => {
                   setPostContent((prev) => prev + " 😊")
                 }}
@@ -274,7 +283,7 @@ export function EnhancedPostCreator() {
 
               <Dialog open={showAiDialog} onOpenChange={setShowAiDialog}>
                 <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="ml-auto">
+                  <Button variant="outline" size="sm" className="shrink-0 whitespace-nowrap h-9">
                     <Sparkles className="h-4 w-4 mr-2 text-primary" />
                     AI Assist
                   </Button>
@@ -302,7 +311,13 @@ export function EnhancedPostCreator() {
                 </DialogContent>
               </Dialog>
 
-              <Button variant="outline" size="sm" onClick={generateAiSuggestion} disabled={isAiGenerating}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={generateAiSuggestion}
+                disabled={isAiGenerating}
+                className="shrink-0 whitespace-nowrap h-9"
+              >
                 <Bot className="h-4 w-4 mr-2" />
                 {isAiGenerating ? "Generating..." : "Suggest Content"}
               </Button>
